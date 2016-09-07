@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.16
+FROM phusion/baseimage:0.9.19
 
 CMD ["/sbin/my_init"]
 
@@ -17,6 +17,7 @@ VOLUME /var/log/luigid
 
 RUN mkdir /etc/service/luigid
 ADD luigid.sh /etc/service/luigid/run
+
 EXPOSE 8082
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
