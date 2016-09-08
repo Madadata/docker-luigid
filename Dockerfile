@@ -17,8 +17,6 @@ RUN pip install -r /tmp/requirements.txt
 RUN mkdir /etc/luigi
 ADD client.cfg /etc/luigi/client.cfg
 
-VOLUME /etc/luigi/client.cfg
-
 EXPOSE 8082
 
 CMD ["/sbin/my_init", "/usr/local/bin/luigid"]
