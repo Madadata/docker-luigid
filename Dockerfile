@@ -1,9 +1,13 @@
 FROM phusion/baseimage:0.9.19
 
-CMD ["/sbin/my_init"]
-
 RUN apt-get update && \
-  apt-get install -y build-essential python python-dev python-pip && \
+  apt-get install -y \
+    build-essential \
+    python3 \
+    python-dev \
+    python-pip \
+    libpq-dev \ # for postgres
+    && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -17,4 +21,4 @@ VOLUME /etc/luigi/client.cfg
 
 EXPOSE 8082
 
-CMD ["/usr/local/bin/luigid"]
+CMD ["/sbin/my_init", "/usr/local/bin/luigid"]
