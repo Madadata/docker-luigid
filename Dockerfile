@@ -6,7 +6,7 @@ RUN apt-get update && \
     python3 \
     python-dev \
     python-pip \
-    libpq-dev \ # for postgres
+    libpq-dev \
     && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
