@@ -1,0 +1,20 @@
+---
+# this will setup postgres as the job store
+version: '2.0'
+services:
+  postgres:
+    image: postgres
+    ports:
+    - 5432:5432
+    environment:
+    - POSTGRES_DB=beetle
+    - POSTGRES_USER=luigid
+  luigid:
+    build: .
+    image: mada/luigid
+    links:
+    - postgres
+    ports:
+    - 8082:8082
+    depends_on:
+    - postgres
