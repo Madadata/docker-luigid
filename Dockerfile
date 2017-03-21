@@ -1,22 +1,25 @@
-FROM phusion/baseimage:0.9.19
+FROM python:3-alpine
 
-RUN apt-get update && \
-  apt-get install -y \
-    build-essential \
-    python3 \
-    python-dev \
-    python-pip \
-    libpq-dev \
-    && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+LABEL maintainer Jiayu Liu <etareduce@gmail.com>
+
+# explicitly set user/group IDs
+RUN addgroup -g 896 -S luigid && adduser -D -u 896 -S -G luigid luigid
+
+RUN apk add --no-cache \
+    'su-exec>=0.2' \
+    libpq \
+    postgresql-dev \
+    musl-dev \
+    gcc
 
 ADD requirements.txt /tmp/requirements.txt
+
 RUN pip install -r /tmp/requirements.txt
 
-RUN mkdir /etc/luigi
+WORKDIR /etc/luigi
+
 ADD client.cfg /etc/luigi/client.cfg
 
 EXPOSE 8082
 
-CMD ["/sbin/my_init", "/usr/local/bin/luigid"]
+CMD ["su-exec", "luigid", "/usr/local/bin/luigid"]
